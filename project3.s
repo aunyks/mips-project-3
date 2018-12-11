@@ -66,12 +66,15 @@ check_str:
 	lb $t5, 0($a0)
 	beqz $t5, prepare_for_conversion
 	beq $t5, $t1, prepare_for_conversion
-	slti $t6, $t5, 48                 # if char < ascii(48),  input invalid,   ascii(48) = 0
-	bne $t6, $zero, err_invalid_input
-	slti $t6, $t5, 58                 # if char < ascii(58),  input is valid,  ascii(58) = 9
-	bne $t6, $zero, step_char_forward
-	slti $t6, $t5, 65                 # if char < ascii(65),  input invalid,   ascii(97) = A
-	bne $t6, $zero, err_invalid_input
+	# if char < ascii(48),  input invalid,   ascii(48) = 0
+		slti $t6, $t5, 48                 
+		bne $t6, $zero, err_invalid_input
+	# if char < ascii(58),  input is valid,  ascii(58) = 9
+		slti $t6, $t5, 58                 
+		bne $t6, $zero, step_char_forward
+	# if char < ascii(65),  input invalid,   ascii(97) = A
+		slti $t6, $t5, 65                 
+		bne $t6, $zero, err_invalid_input
 	slti $t6, $t5, 88                 # if char < ascii(88),  input is valid,  ascii(88) = X
 	bne $t6, $zero, step_char_forward
 	slti $t6, $t5, 97                 # if char < ascii(97),  input invalid,   ascii(97) = a
