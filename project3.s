@@ -81,9 +81,11 @@ check_str:
 	# if char < ascii(97),  input invalid,   ascii(97) = a
 		slti $t6, $t5, 97                 
 		bne $t6, $zero, err_invalid_input
-	slti $t6, $t5, 120                # if char < ascii(120), input is valid, ascii(120) = x
-	bne $t6, $zero, step_char_forward
-	bgt $t5, 119, err_invalid_input   # if char > ascii(119), input invalid,  ascii(119) = w
+	# if char < ascii(120), input is valid, ascii(120) = x
+		slti $t6, $t5, 120                
+		bne $t6, $zero, step_char_forward
+	# if char > ascii(119), input invalid,  ascii(119) = w
+		bgt $t5, 119, err_invalid_input   
 
 step_char_forward:
 	addi $a0, $a0, 1
