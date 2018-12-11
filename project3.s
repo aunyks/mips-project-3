@@ -75,10 +75,12 @@ check_str:
 	# if char < ascii(65),  input invalid,   ascii(97) = A
 		slti $t6, $t5, 65                 
 		bne $t6, $zero, err_invalid_input
-	slti $t6, $t5, 88                 # if char < ascii(88),  input is valid,  ascii(88) = X
-	bne $t6, $zero, step_char_forward
-	slti $t6, $t5, 97                 # if char < ascii(97),  input invalid,   ascii(97) = a
-	bne $t6, $zero, err_invalid_input
+	# if char < ascii(88),  input is valid,  ascii(88) = X
+		slti $t6, $t5, 88                 
+		bne $t6, $zero, step_char_forward
+	# if char < ascii(97),  input invalid,   ascii(97) = a
+		slti $t6, $t5, 97                 
+		bne $t6, $zero, err_invalid_input
 	slti $t6, $t5, 120                # if char < ascii(120), input is valid, ascii(120) = x
 	bne $t6, $zero, step_char_forward
 	bgt $t5, 119, err_invalid_input   # if char > ascii(119), input invalid,  ascii(119) = w
